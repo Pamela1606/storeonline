@@ -1,9 +1,16 @@
 package com.online.store.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 public class Customer extends ModelBase {
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    private Set<Sale> sales;
 
     private String name;
 
@@ -11,7 +18,15 @@ public class Customer extends ModelBase {
 
     private String email;
 
-    private String phone;
+    private String phoneNumber;
+
+    public Set<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(Set<Sale> sales) {
+        this.sales = sales;
+    }
 
     public String getName() {
         return name;
@@ -37,11 +52,11 @@ public class Customer extends ModelBase {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
