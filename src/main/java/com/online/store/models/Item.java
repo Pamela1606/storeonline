@@ -16,6 +16,10 @@ public class Item extends ModelBase {
     @JoinColumn(name = "id_capacity")
     private Capacity capacity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_category")
+    private Category category;
+
     private String name;
 
     private String description;
@@ -40,6 +44,14 @@ public class Item extends ModelBase {
 
     public void setCapacity(Capacity capacity) {
         this.capacity = capacity;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getName() {
