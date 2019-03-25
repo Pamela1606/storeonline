@@ -1,19 +1,46 @@
 package com.online.store.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Item extends ModelBase {
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_brand")
+    private Brand brand;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_capacity")
+    private Capacity capacity;
+
     private String name;
 
-    private String desciption;
+    private String description;
 
     private Double price;
 
-    private Double tags;
+    private Double tax;
 
     private Double importPrice;
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Capacity getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Capacity capacity) {
+        this.capacity = capacity;
+    }
 
     public String getName() {
         return name;
@@ -23,12 +50,12 @@ public class Item extends ModelBase {
         this.name = name;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Double getPrice() {
@@ -39,12 +66,12 @@ public class Item extends ModelBase {
         this.price = price;
     }
 
-    public Double getTags() {
-        return tags;
+    public Double getTax() {
+        return tax;
     }
 
-    public void setTags(Double tags) {
-        this.tags = tags;
+    public void setTax(Double tax) {
+        this.tax = tax;
     }
 
     public Double getImportPrice() {
