@@ -20,6 +20,10 @@ public class Item extends ModelBase {
     @JoinColumn(name = "id_category")
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_model_item")
+    private ModelItem modelItem;
+
     private String name;
 
     private String description;
@@ -52,6 +56,14 @@ public class Item extends ModelBase {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public ModelItem getModelItem() {
+        return modelItem;
+    }
+
+    public void setModelItem(ModelItem modelItem) {
+        this.modelItem = modelItem;
     }
 
     public String getName() {
