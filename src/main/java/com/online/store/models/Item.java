@@ -1,9 +1,7 @@
 package com.online.store.models;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Item extends ModelBase {
@@ -23,6 +21,9 @@ public class Item extends ModelBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_model_item")
     private ModelItem modelItem;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
+    private Set<ItemImage> itemImages;
 
     private String name;
 
@@ -64,6 +65,14 @@ public class Item extends ModelBase {
 
     public void setModelItem(ModelItem modelItem) {
         this.modelItem = modelItem;
+    }
+
+    public Set<ItemImage> getItemImages() {
+        return itemImages;
+    }
+
+    public void setItemImages(Set<ItemImage> itemImages) {
+        this.itemImages = itemImages;
     }
 
     public String getName() {
