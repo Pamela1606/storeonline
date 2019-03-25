@@ -28,6 +28,9 @@ public class Item extends ModelBase {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
     private Set<Inventory> inventories;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
+    private Set<SaleDetail> saleDetails;
+
     private String name;
 
     private String description;
@@ -84,6 +87,14 @@ public class Item extends ModelBase {
 
     public void setInventories(Set<Inventory> inventories) {
         this.inventories = inventories;
+    }
+
+    public Set<SaleDetail> getSaleDetails() {
+        return saleDetails;
+    }
+
+    public void setSaleDetails(Set<SaleDetail> saleDetails) {
+        this.saleDetails = saleDetails;
     }
 
     public String getName() {
