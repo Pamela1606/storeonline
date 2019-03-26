@@ -10,6 +10,8 @@ public class SaleDto extends BaseDto {
 
     private Double totalImportPrice;
 
+    private Long customerId;
+
     public Double getTotalPrice() {
         return totalPrice;
     }
@@ -32,5 +34,13 @@ public class SaleDto extends BaseDto {
 
     public void setTotalImportPrice(Double totalImportPrice) {
         this.totalImportPrice = totalImportPrice;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 }

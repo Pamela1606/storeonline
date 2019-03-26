@@ -1,6 +1,10 @@
 package com.online.store.service.sale;
 
+import com.online.store.models.Customer;
+import com.online.store.models.Item;
 import com.online.store.models.Sale;
+import com.online.store.reporsitory.CustomerRepository;
+import com.online.store.reporsitory.ModelItemRepository;
 import com.online.store.reporsitory.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +21,9 @@ public class SaleServiceImpl implements SaleService {
     private SaleRepository saleRepository;
 
     @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
     private SaleConverter saleConverter;
 
     @Override
@@ -26,7 +33,13 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public SaleDto createEntity(SaleDto saleDto) {
-        Sale sale = saleRepository.save(saleConverter.toModel(saleDto));
+        Optional<Customer> customerOptional = customerRepository.findById(saleDto.getCustomerId());
+        if (!customerOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The Customer with %d not exist.", saleDto.getCustomerId()));
+        }
+        Sale sale = saleConverter.toModel(saleDto);
+        sale.setCustomer(customerOptional.get());
+        saleRepository.save(sale);
         return saleConverter.toDto(sale);
     }
 
