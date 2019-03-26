@@ -1,5 +1,7 @@
 package com.online.store.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,27 +9,30 @@ import java.util.Set;
 public class Item extends ModelBase {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_brand")
+    @JoinColumn(name = "brand_id")
     private Brand brand;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_capacity")
+    @JoinColumn(name = "capacity_id")
     private Capacity capacity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_category")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_model_item")
+    @JoinColumn(name = "model_item_id")
     private ModelItem modelItem;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
     private Set<ItemImage> itemImages;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
     private Set<Inventory> inventories;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.ALL)
     private Set<SaleDetail> saleDetails;
 

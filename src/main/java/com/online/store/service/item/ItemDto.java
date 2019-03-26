@@ -14,6 +14,14 @@ public class ItemDto extends BaseDto {
 
     private Double importPrice;
 
+    private Long modelItemId;
+
+    private Long categoryId;
+
+    private Long capacityId;
+
+    private Long brandId;
+
     public String getName() {
         return name;
     }
@@ -52,5 +60,37 @@ public class ItemDto extends BaseDto {
 
     public void setImportPrice(Double importPrice) {
         this.importPrice = importPrice;
+    }
+
+    public Long getModelItemId() {
+        return modelItemId;
+    }
+
+    public void setModelItemId(Long modelItemId) {
+        this.modelItemId = modelItemId;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Long getCapacityId() {
+        return capacityId;
+    }
+
+    public void setCapacityId(Long capacityId) {
+        this.capacityId = capacityId;
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
     }
 }

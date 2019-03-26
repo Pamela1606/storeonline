@@ -1,5 +1,7 @@
 package com.online.store.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import java.util.Set;
 @Entity
 public class Capacity extends ModelBase {
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "capacity", cascade = CascadeType.ALL)
     private Set<Item> items;
 

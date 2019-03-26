@@ -1,7 +1,7 @@
 package com.online.store.service.item;
 
-import com.online.store.models.Item;
-import com.online.store.reporsitory.ItemRepository;
+import com.online.store.models.*;
+import com.online.store.reporsitory.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +17,18 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
 
     @Autowired
+    private ModelItemRepository modelItemRepository;
+
+    @Autowired
+    private CapacityRepository capacityRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
     private ItemConverter itemConverter;
 
     @Override
@@ -26,7 +38,28 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto createEntity(ItemDto itemDto) {
-        Item item = itemRepository.save(itemConverter.toModel(itemDto));
+        Optional<ModelItem> modelItemOptional = modelItemRepository.findById(itemDto.getModelItemId());
+        if (!modelItemOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The ModelItem with %d not exist.", itemDto.getModelItemId()));
+        }
+        Optional<Capacity> capacityOptional = capacityRepository.findById(itemDto.getCapacityId());
+        if (!capacityOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The Capacity with %d not exist.", itemDto.getCapacityId()));
+        }
+        Optional<Category> categoryOptional = categoryRepository.findById(itemDto.getCategoryId());
+        if (!categoryOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The Category with %d not exist.", itemDto.getCategoryId()));
+        }
+        Optional<Brand> brandOptional = brandRepository.findById(itemDto.getBrandId());
+        if (!brandOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The Brand with %d not exist.", itemDto.getBrandId()));
+        }
+        Item item = itemConverter.toModel(itemDto);
+        item.setModelItem(modelItemOptional.get());
+        item.setCapacity(capacityOptional.get());
+        item.setCategory(categoryOptional.get());
+        item.setBrand(brandOptional.get());
+        itemRepository.save(item);
         return itemConverter.toDto(item);
     }
 
