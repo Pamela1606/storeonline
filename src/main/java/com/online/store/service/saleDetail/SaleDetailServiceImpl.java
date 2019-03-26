@@ -1,7 +1,9 @@
 package com.online.store.service.saleDetail;
 
+import com.online.store.models.Item;
+import com.online.store.models.Sale;
 import com.online.store.models.SaleDetail;
-import com.online.store.reporsitory.SaleDetailRepository;
+import com.online.store.reporsitory.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,12 @@ public class SaleDetailServiceImpl implements SaleDetailService {
     private SaleDetailRepository saleDetailRepository;
 
     @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private SaleRepository saleRepository;
+
+    @Autowired
     private SaleDetailConverter saleDetailConverter;
 
     @Override
@@ -26,7 +34,18 @@ public class SaleDetailServiceImpl implements SaleDetailService {
 
     @Override
     public SaleDetailDto createEntity(SaleDetailDto saleDetailDto) {
-        SaleDetail saleDetail = saleDetailRepository.save(saleDetailConverter.toModel(saleDetailDto));
+        Optional<Item> itemOptional = itemRepository.findById(saleDetailDto.getItemId());
+        if (!itemOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The Item with %d not exist.", saleDetailDto.getItemId()));
+        }
+        Optional<Sale> saleOptional = saleRepository.findById(saleDetailDto.getSaleId());
+        if (!saleOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The Sale with %d not exist.", saleDetailDto.getSaleId()));
+        }
+        SaleDetail saleDetail = saleDetailConverter.toModel(saleDetailDto);
+        saleDetail.setItem(itemOptional.get());
+        saleDetail.setSale(saleOptional.get());
+        saleDetailRepository.save(saleDetail);
         return saleDetailConverter.toDto(saleDetail);
     }
 

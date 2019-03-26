@@ -1,7 +1,9 @@
 package com.online.store.service.inventory;
 
 import com.online.store.models.Inventory;
-import com.online.store.reporsitory.InventoryRepository;
+import com.online.store.models.InventoryState;
+import com.online.store.models.Item;
+import com.online.store.reporsitory.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,12 @@ public class InventoryServiceImpl implements InventoryService {
     private InventoryRepository inventoryRepository;
 
     @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private InventoryStateRepository inventoryStateRepository;
+
+    @Autowired
     private InventoryConverter inventoryConverter;
 
     @Override
@@ -26,7 +34,18 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryDto createEntity(InventoryDto inventoryDto) {
-        Inventory inventory = inventoryRepository.save(inventoryConverter.toModel(inventoryDto));
+        Optional<Item> itemOptional = itemRepository.findById(inventoryDto.getItemId());
+        if (!itemOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The Item with %d not exist.", inventoryDto.getItemId()));
+        }
+        Optional<InventoryState> inventoryStateOptional = inventoryStateRepository.findById(inventoryDto.getInventoryStateId());
+        if (!inventoryStateOptional.isPresent()) {
+            throw new InvalidParameterException(String.format("The InventoryState with %d not exist.", inventoryDto.getInventoryStateId()));
+        }
+        Inventory inventory = inventoryConverter.toModel(inventoryDto);
+        inventory.setItem(itemOptional.get());
+        inventory.setInventoryState(inventoryStateOptional.get());
+        inventoryRepository.save(inventory);
         return inventoryConverter.toDto(inventory);
     }
 
