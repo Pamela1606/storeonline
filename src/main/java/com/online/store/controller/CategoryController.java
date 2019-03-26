@@ -1,0 +1,37 @@
+package com.online.store.controller;
+
+import com.online.store.service.category.CategoryDto;
+import com.online.store.service.category.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(path = "v1/categories")
+public class CategoryController {
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping
+    public ResponseEntity<Object> getCategories(Pageable pageable) {
+        return new ResponseEntity<>(categoryService.findAll(pageable).getContent(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> createCategory(@RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.createEntity(categoryDto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateCategory(@PathVariable(value = "id") Long id, @RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.updateEntity(categoryDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteCategory(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.ok(categoryService.deleteEntity(id));
+    }
+}

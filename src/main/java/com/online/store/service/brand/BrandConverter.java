@@ -12,9 +12,9 @@ public class BrandConverter {
     private ModelMapper modelMapper;
 
     /**
-     * Convert BrandDto to Brand
+     * Convert CategoryDto to Brand
      *
-     * @param brandDto a BrandDto
+     * @param brandDto a CategoryDto
      * @return a Brand entity
      */
     public Brand toModel(BrandDto brandDto) {
@@ -22,10 +22,10 @@ public class BrandConverter {
     }
 
     /**
-     * Convert Brand to BrandDto
+     * Convert Brand to CategoryDto
      *
      * @param brand a Brand
-     * @return a BrandDto entity
+     * @return a CategoryDto entity
      */
     public BrandDto toDto(Brand brand) {
         return modelMapper.map(brand, BrandDto.class);
