@@ -38,13 +38,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto createEntity(ItemDto itemDto) {
+        System.out.println(" dto " + itemDto);
         Optional<ModelItem> modelItemOptional = modelItemRepository.findById(itemDto.getModelItemId());
         if (!modelItemOptional.isPresent()) {
             throw new InvalidParameterException(String.format("The ModelItem with %d not exist.", itemDto.getModelItemId()));
-        }
-        Optional<Capacity> capacityOptional = capacityRepository.findById(itemDto.getCapacityId());
-        if (!capacityOptional.isPresent()) {
-            throw new InvalidParameterException(String.format("The Capacity with %d not exist.", itemDto.getCapacityId()));
         }
         Optional<Category> categoryOptional = categoryRepository.findById(itemDto.getCategoryId());
         if (!categoryOptional.isPresent()) {
@@ -56,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
         }
         Item item = itemConverter.toModel(itemDto);
         item.setModelItem(modelItemOptional.get());
-        item.setCapacity(capacityOptional.get());
+        item.setCapacity(itemDto.getCapacity());
         item.setCategory(categoryOptional.get());
         item.setBrand(brandOptional.get());
         itemRepository.save(item);

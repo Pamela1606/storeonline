@@ -1,5 +1,8 @@
 package com.online.store.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -8,6 +11,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ItemImage extends ModelBase {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_item")
     private Item item;

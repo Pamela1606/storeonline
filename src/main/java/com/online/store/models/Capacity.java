@@ -11,19 +11,8 @@ import java.util.Set;
 @Entity
 public class Capacity extends ModelBase {
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "capacity", cascade = CascadeType.ALL)
-    private Set<Item> items;
 
     private String name;
-
-    public Set<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(Set<Item> items) {
-        this.items = items;
-    }
 
     public String getName() {
         return name;

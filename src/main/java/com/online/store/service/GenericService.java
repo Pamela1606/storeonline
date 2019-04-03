@@ -1,5 +1,6 @@
 package com.online.store.service;
 
+import com.online.store.service.itemImage.ItemImageDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

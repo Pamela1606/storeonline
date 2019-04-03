@@ -1,6 +1,9 @@
 package com.online.store.service.item;
 
+import com.online.store.models.ItemImage;
 import com.online.store.service.BaseDto;
+
+import java.util.List;
 
 public class ItemDto extends BaseDto {
 
@@ -18,9 +21,11 @@ public class ItemDto extends BaseDto {
 
     private Long categoryId;
 
-    private Long capacityId;
+    private String capacity;
 
     private Long brandId;
+
+    private List<ItemImage> itemImages;
 
     public String getName() {
         return name;
@@ -78,12 +83,12 @@ public class ItemDto extends BaseDto {
         this.categoryId = categoryId;
     }
 
-    public Long getCapacityId() {
-        return capacityId;
+    public String getCapacity() {
+        return capacity;
     }
 
-    public void setCapacityId(Long capacityId) {
-        this.capacityId = capacityId;
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
     public Long getBrandId() {
@@ -92,5 +97,13 @@ public class ItemDto extends BaseDto {
 
     public void setBrandId(Long brandId) {
         this.brandId = brandId;
+    }
+
+    public List<ItemImage> getItemImages() {
+        return itemImages;
+    }
+
+    public void setItemImages(List<ItemImage> itemImages) {
+        this.itemImages = itemImages;
     }
 }

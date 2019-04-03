@@ -13,10 +13,6 @@ public class Item extends ModelBase {
     private Brand brand;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "capacity_id")
-    private Capacity capacity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -46,20 +42,14 @@ public class Item extends ModelBase {
 
     private Double importPrice;
 
+    private String capacity;
+
     public Brand getBrand() {
         return brand;
     }
 
     public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public Capacity getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Capacity capacity) {
-        this.capacity = capacity;
     }
 
     public Category getCategory() {
@@ -140,5 +130,9 @@ public class Item extends ModelBase {
 
     public void setImportPrice(Double importPrice) {
         this.importPrice = importPrice;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 }
